@@ -1,63 +1,38 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyMbjrMg7QIvGFxFGiNfz4W1",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "metadata": {
-        "id": "view-in-github",
-        "colab_type": "text"
-      },
-      "source": [
-        "<a href=\"https://colab.research.google.com/github/nalu00/Aprendizado-de-Maquina/blob/main/DeveresDeCasa/Dever-08\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": null,
-      "metadata": {
-        "id": "3neBToVQpO69"
-      },
-      "outputs": [],
-      "source": [
-        "# Importando bibliotecas necessárias\n",
-        "from sklearn.datasets import load_iris\n",
-        "from sklearn.neighbors import KNeighborsClassifier\n",
-        "\n",
-        "# Carregando o dataset Iris\n",
-        "iris = load_iris()\n",
-        "X = iris.data      # Atributos (features)\n",
-        "y = iris.target    # Rótulos (classes)\n",
-        "\n",
-        "# Criando o modelo com 3 vizinhos\n",
-        "modelo = KNeighborsClassifier(n_neighbors=3)\n",
-        "\n",
-        "# Treinando o modelo\n",
-        "modelo.fit(X, y)\n",
-        "\n",
-        "# Testando o modelo com uma nova flor\n",
-        "entrada = [[5.0, 3.6, 1.4, 0.2]]  # exemplo de entrada\n",
-        "\n",
-        "# Fazendo a previsão\n",
-        "resultado = modelo.predict(entrada)\n",
-        "\n",
-        "# Mostrando o nome da espécie prevista\n",
-        "print(\"Espécie prevista:\", iris.target_names[resultado[0]])"
-      ]
-    }
-  ]
-}
+from sklearn.datasets import load_iris
+from sklearn.neighbors import KNeighborsClassifier
+
+# Carregar o dataset Iris
+iris = load_iris()
+
+X = iris.data  # Características
+y = iris.target  # Rótulos
+nomes_especies = iris.target_names  # Nomes das espécies
+
+# Criar e treinar o modelo KNN
+modelo = KNeighborsClassifier(n_neighbors=3)
+modelo.fit(X, y)
+
+# Solicitar as medidas ao usuário
+print("Digite as medidas da primeira flor:")
+sepal_length = float(input("Comprimento da sépala (cm): "))
+sepal_width = float(input("Largura da sépala (cm): "))
+petal_length = float(input("Comprimento da pétala (cm): "))
+petal_width = float(input("Largura da pétala (cm): "))
+
+print("\nDigite as medidas da segunda flor:")
+sepal_length2 = float(input("Comprimento da sépala (cm): "))
+sepal_width2 = float(input("Largura da sépala (cm): "))
+petal_length2 = float(input("Comprimento da pétala (cm): "))
+petal_width2 = float(input("Largura da pétala (cm): "))
+
+# Fazer a predição
+novas_flores = [
+    [sepal_length, sepal_width, petal_length, petal_width],
+    [sepal_length2, sepal_width2, petal_length2, petal_width2]
+]
+predicao = modelo.predict(novas_flores)
+
+# Imprimir os resultados
+print()
+print(f"A primeira flor provavelmente é da espécie: {nomes_especies[predicao[0]]}")
+print(f"A segunda flor provavelmente é da espécie: {nomes_especies[predicao[1]]}")
